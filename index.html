@@ -1,62 +1,79 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Inventaris Barang</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <<marquee>
-    <body bgcolor="pink"><font color="black"><font size=30><strike>Biodata Pengajuan Ujian</strike></font>
-    </marquee>
-<table width="745" border="1" cellspacing="0" cellpadding="5" align="center">
-<tr align="center" bgcolor="#66CC33">
-<td width="174"><strike>DATA DIRI</strike></td>
-<td width="353"><strike>KETERANGAN</strike></td>
-<td width="232"><strike>FOTO</strike></td>
-</tr>
-<tr>
-<td>Nama</td>
-<td>IRMALA</td>
-<td rowspan="10" align="center"><img src="abc.png" width="210" height="313"></td>
-</tr>
-<tr>
-<td>Jurusan</td>
-<td>PPLG</td>
-</tr>
-<tr>
-<td>Konsentrasi</td>
-<td><strike>REKAYASA PERANGKAT LUNAK (RPL)</strike></td>
-</tr>
-<tr>
-<td>Jenjang</td>
-<td>SMK</td>
-</tr>
-<tr>
-<td>Jenis Kelamin</td>
-<td>Laki-laki</td>
-</tr>
-<tr>
-<td>Tempat/Tanggal Lahir</td>
-<td>BERINGIN, 22 NOVEMBER 2023</td>
-</tr>
-<tr>
-<td>SMK</td>
-<td>SMKN 1 BERINGIN</td>
-</tr>
-<tr>
-<td>Alamat</td>
-<td>Jl. PENDIDIKAN, BERINGIN</td>
-</tr>
-<tr>
-<td>Pekerjaan</td>
-<td>Web designer/web developer</td>
-</tr>
-<tr>
-<td>Hobi</td>
-<td>Ngoding</td>
-</tr>
-</table>
+  <div class="wrap">
+    <header>
+      <div>
+        <h1>Inventaris Barang</h1>
+        <p>Catat stok, lokasi, dan nilai barang Anda.</p>
+      </div>
+      <button class="btn primary" id="addBtn">Tambah barang</button>
+    </header>
+
+    <!-- Ringkasan -->
+    <section class="stats" aria-label="Ringkasan">
+      <div class="stat"><b id="sItems">0</b><span>Jenis barang</span></div>
+      <div class="stat"><b id="sQty">0</b><span>Total unit</span></div>
+      <div class="stat"><b id="sValue">Rp0</b><span>Nilai persediaan</span></div>
+      <div class="stat low"><b id="sLow">0</b><span>Stok menipis atau habis</span></div>
+    </section>
+
+    <!-- Pencarian, filter, urutan -->
+    <div class="tools">
+      <input type="search" id="q" placeholder="Cari nama, kode, atau lokasi" aria-label="Cari barang">
+      <select id="cat" aria-label="Filter kategori"></select>
+      <select id="sort" aria-label="Urutkan">
+        <option value="name">Urut nama</option>
+        <option value="qty">Stok tersedikit</option>
+        <option value="value">Nilai tertinggi</option>
+        <option value="recent">Terbaru</option>
+      </select>
+      <button class="btn" id="csvBtn">Unduh CSV</button>
+    </div>
+
+    <!-- Tabel barang -->
+    <div class="table-box">
+      <table>
+        <thead>
+          <tr>
+            <th>Barang</th><th>Kategori</th><th>Lokasi</th>
+            <th class="num">Harga satuan</th><th>Stok</th><th>Status</th><th></th>
+          </tr>
+        </thead>
+        <tbody id="rows"></tbody>
+      </table>
+      <div class="empty" id="empty" hidden></div>
+    </div>
+  </div>
+
+  <!-- Form tambah / ubah barang -->
+  <dialog id="dlg">
+    <form id="f" method="dialog">
+      <h2 id="dTitle">Tambah barang</h2>
+      <div class="grid">
+        <label class="full">Nama barang<input id="fName" required maxlength="80"></label>
+        <label>Kode / SKU<input id="fCode" maxlength="30"></label>
+        <label>Kategori<input id="fCat" list="catList" maxlength="40" placeholder="Contoh: Elektronik"></label>
+        <datalist id="catList"></datalist>
+        <label>Jumlah stok<input id="fQty" type="number" min="0" step="1" required value="0"></label>
+        <label>Satuan<input id="fUnit" maxlength="15" value="pcs"></label>
+        <label>Harga satuan (Rp)<input id="fPrice" type="number" min="0" step="1" value="0"></label>
+        <label>Batas stok minimum<input id="fMin" type="number" min="0" step="1" value="5"></label>
+        <label class="full">Lokasi penyimpanan<input id="fLoc" maxlength="50" placeholder="Contoh: Gudang A, Rak 3"></label>
+      </div>
+      <div class="actions">
+        <button type="button" class="btn" id="cancel">Batal</button>
+        <button type="submit" class="btn primary">Simpan</button>
+      </div>
+    </form>
+  </dialog>
+
+  <script src="script.js"></script>
 </body>
 </html>
-
